@@ -1,0 +1,26 @@
+LAMP
+MySQL
+PHP MVC with Code Igniter
+Apache, Nginx
+
+client to server request
+//sending a form
+//accessing a page
+
+server can't request something from client while client is talking to the server at same time
+
+users table
+id, first_name, last_name ...
+
+MEAN
+MongoDB (JavaScript Objects)
+users
+{first_name: "John", last_name: "Doe"}
+Express (MVC Framework)
+Angular
+Node.js (real time, server)
+Web Sockets (two way communication)
+
+Chat applications
+
+

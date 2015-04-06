@@ -1,0 +1,54 @@
+<html>
+<head>
+	<script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript">
+        $(document).ready(function(){
+
+    		var socket = io.connect();
+
+    		//socket.on('sample_event', function(data){
+    		//	console.log(data)
+                //$("#users").append("<li>user has connected</li>");
+    		//})
+
+            $("#send_message").submit(function(){
+                var chat = $(this).find("textarea").val()
+
+                $("#messages").append("<li>"+chat+"</li>")
+                socket.emit('send_messsage', {message: chat});
+
+                return false;  
+            })
+
+            socket.on('display_message', function(data){
+                $("#messages").append("<li>"+data.submitted_message+"</li>")
+            })
+        })
+	</script>
+</head>
+<body>
+    <ul id="users">
+        
+    </ul>
+    <h2>Here are all the users:</h2>
+    <% for (var x in users) { %>
+        <h3>Name: <%= users[x].name %></h3>
+        <h4>Email: <%= users[x].email %></h4>
+        <hr>
+    <% } %>
+    <form action="/add_user" method="post">
+    	<input type="text" name="name">
+    	<input type="text" name="email">
+    	<input type="submit" value="add user">
+    </form>
+    <h3>Message Board</h3>
+    <ul id="messages">
+        
+    </ul>
+    <form id="send_message" method="post">
+        <textarea name="chat"></textarea>
+        <input type="submit" value="send">
+    </form>
+</body>
+</html>
