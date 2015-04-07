@@ -2,40 +2,46 @@
 <head>
   <title>Full Mean Demo="support tag from-rainbow"></title>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+    var io = io.connect()
+
+    io.on('get_friends', function(data){
+        console.log(data)
+    })
+  </script>
   <script>
     var friends_app = angular.module('friends_app', []);
     
     friends_app.controller('FriendsController', function($scope, FriendFactory) {
-      
-      $scope.friends = [];
+        $scope.friends = [];
 
-      FriendFactory.getFriends(function(data){
-        $scope.friends = data;
-      });
-
-      $scope.addfriend = function() {
-        FriendFactory.addFriend($scope.new_friend, function(new_friend) {
-            $scope.friends.push(new_friend)
+        FriendFactory.getFriends(function(data){
+            $scope.friends = data;
         });
-      }
+
+        $scope.addfriend = function() {
+            FriendFactory.addFriend($scope.new_friend, function(new_friend) {
+                $scope.friends.push(new_friend)
+            });
+        }
     });
 
     friends_app.factory('FriendFactory', function($http) {
-      var friends = {};
-   
-      friends.getFriends = function(callback){
-        $http.get('/friends').success(function(output){
-            callback(output);
-        });
-      }
-      
-      friends.addFriend = function(info, callback) {
+        var friends = {};
 
-        $http.post('/friend/new', info).success(function(output){
-            callback(output)
-        });
-      }
-      return friends;
+        friends.getFriends = function(callback){
+            $http.get('/friends').success(function(output){
+                callback(output);
+            });
+        }
+
+        friends.addFriend = function(info, callback) {
+            $http.post('/friend/new', info).success(function(output){
+                callback(output)
+            });
+        }
+        return friends;
     });
   </script>
 </head>

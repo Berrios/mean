@@ -1,6 +1,8 @@
+//connect to mongo database
 mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/fullmean_friends')
 
+//bootstrap/autoload models
 var fs = require('fs')
 var models_path = __dirname + '/../models'
 fs.readdirSync(models_path).forEach(function(file) {

@@ -1,13 +1,13 @@
 var express = require('express') //load the framework
-var bodyParser = require('body-parser') //for post data
 var app = express()
+var server = app.listen(8000);
+var bodyParser = require('body-parser') //for post data
 
-app.use(bodyParser.json());
 app.use(express.static(__dirname + './../assets'))
+app.use(bodyParser.json());
 app.set('views', __dirname + '/views') 
 app.set('view engine', 'ejs')
 
-app.listen(8000);
-
 require('./config/mongoose.js') //auto load models
+require('./config/socketio.js')(server)
 require('./config/routes.js')(app) //load routes
